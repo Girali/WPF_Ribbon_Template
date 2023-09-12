@@ -1,0 +1,3 @@
+﻿<ControlTemplate TargetType="RibbonControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <RibbonContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="PART_ContentPresenter" />
+</ControlTemplate>

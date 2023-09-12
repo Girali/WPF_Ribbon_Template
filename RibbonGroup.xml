@@ -1,0 +1,87 @@
+﻿<ControlTemplate TargetType="RibbonGroup" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Border Background="{TemplateBinding Panel.Background}" Name="GroupBorder" Margin="1,2,0,0">
+    <Grid Name="MainGrid">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" MinHeight="16" />
+      </Grid.RowDefinitions>
+      <Border BorderThickness="1,1,1,1" CornerRadius="2,2,2,2" BorderBrush="{TemplateBinding RibbonControlService.MouseOverBorderBrush}" Background="{TemplateBinding RibbonControlService.MouseOverBackground}" Name="PART_HotBackground" Opacity="0" SnapsToDevicePixels="True" Grid.RowSpan="3" />
+      <Border Background="{TemplateBinding Border.BorderBrush}" Name="SeparatorBorder" Width="1" Height="75" VerticalAlignment="Center" SnapsToDevicePixels="True" Grid.Column="1" Grid.RowSpan="3" />
+      <Border Padding="3,0,3,0" Margin="2,1,2,0">
+        <Grid>
+          <ItemsPresenter Name="ItemsPresenter" />
+          <ContentControl Name="PART_TemplateContentControl" Visibility="Collapsed" Focusable="False" />
+        </Grid>
+      </Border>
+      <Border Name="LabelSeparatorBorder" Height="1" Margin="5,1,5,-1" Grid.Row="1" />
+      <Grid Margin="2,0,2,0" Grid.Row="2">
+        <ContentPresenter Content="{TemplateBinding HeaderedContentControl.Header}" ContentTemplate="{TemplateBinding HeaderedContentControl.HeaderTemplate}" ContentStringFormat="{TemplateBinding HeaderedItemsControl.HeaderStringFormat}" ContentSource="Header" Name="PART_Header" MaxHeight="16" Margin="2,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center" TextElement.Foreground="#FF9E9E9E" />
+      </Grid>
+    </Grid>
+  </Border>
+  <ControlTemplate.Triggers>
+    <Trigger Property="UIElement.IsEnabled">
+      <Setter Property="TextElement.Foreground" TargetName="MainGrid">
+        <Setter.Value>
+          <SolidColorBrush>#FF9E9E9E</SolidColorBrush>
+        </Setter.Value>
+      </Setter>
+      <Trigger.Value>
+        <s:Boolean>False</s:Boolean>
+      </Trigger.Value>
+    </Trigger>
+    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+      <Setter Property="TextElement.Foreground" TargetName="MainGrid">
+        <Setter.Value>
+          <DynamicResource ResourceKey="{x:Static SystemColors.MenuTextBrushKey}" />
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Panel.Background" TargetName="PART_HotBackground">
+        <Setter.Value>
+          <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="UIElement.Visibility" TargetName="SeparatorBorder">
+        <Setter.Value>
+          <x:Static Member="Visibility.Collapsed" />
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Border.BorderThickness" TargetName="GroupBorder">
+        <Setter.Value>
+          <Thickness>1,1,1,1</Thickness>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Panel.Background" TargetName="GroupBorder">
+        <Setter.Value>
+          <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Border.BorderBrush" TargetName="GroupBorder">
+        <Setter.Value>
+          <DynamicResource ResourceKey="{x:Static SystemColors.ControlDarkBrushKey}" />
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Panel.Background" TargetName="LabelSeparatorBorder">
+        <Setter.Value>
+          <DynamicResource ResourceKey="{x:Static SystemColors.ControlDarkBrushKey}" />
+        </Setter.Value>
+      </Setter>
+    </DataTrigger>
+    <MultiDataTrigger>
+      <MultiDataTrigger.Conditions>
+        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="False" />
+        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+      </MultiDataTrigger.Conditions>
+      <Setter Property="TextElement.Foreground" TargetName="MainGrid">
+        <Setter.Value>
+          <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
+        </Setter.Value>
+      </Setter>
+    </MultiDataTrigger>
+  </ControlTemplate.Triggers>
+</ControlTemplate>
